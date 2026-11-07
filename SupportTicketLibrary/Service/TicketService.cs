@@ -10,6 +10,11 @@ namespace SupportTicketLibrary.Service
     public class TicketService
     {
         private readonly StaleDataAccess _dataAccess;
+
+        public TicketService(StaleDataAccess dataAccess)
+        {
+            _dataAccess = dataAccess;
+        }
         public void CreateTicket(TicketModel ticket)
         {
             _dataAccess.SaveData(ticket, StaleDataAccess.Mode.Add);
