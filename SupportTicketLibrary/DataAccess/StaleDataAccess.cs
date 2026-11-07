@@ -1,6 +1,5 @@
 ﻿using CsvHelper;
 using CsvHelper.Linq;
-using SupportTicketLibrary.Interface;
 using SupportTicketLibrary.Models;
 using System.Linq;
 using Z.Expressions;
@@ -8,6 +7,7 @@ namespace SupportTicketLibrary.DataAccess
 {
     public class StaleDataAccess
     {
+        public string FilePath { get; set; }
         public enum Mode
         {
             Add,
@@ -19,7 +19,7 @@ namespace SupportTicketLibrary.DataAccess
         public List<TicketModel> LoadData(string? query = null)
         {
             
-            string filePath = "C:\\Users\\mgapp\\source\\repos\\SupportTicketApp\\SupportTicketLibrary\\Data\\data.csv";
+            string filePath = FilePath;
             using (var csvFile = CsvReader.FromFile(filePath))
             {
                 var tickets = csvFile.GetRecords<TicketModel>().ToList();
@@ -34,7 +34,7 @@ namespace SupportTicketLibrary.DataAccess
 
         public void SaveData(TicketModel ticket, StaleDataAccess.Mode saveMode)
         {
-            string filePath = "C:\\Users\\mgapp\\source\\repos\\SupportTicketApp\\SupportTicketLibrary\\Data\\data.csv";
+            string filePath = FilePath;
             var table = CsvQueryable.FromFile<TicketModel>(filePath);
             if (saveMode == StaleDataAccess.Mode.Add)
             {

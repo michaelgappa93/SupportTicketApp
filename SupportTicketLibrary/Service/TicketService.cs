@@ -1,9 +1,5 @@
 ﻿using SupportTicketLibrary.DataAccess;
-using SupportTicketLibrary.Interface;
 using SupportTicketLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SupportTicketLibrary.Service
 {

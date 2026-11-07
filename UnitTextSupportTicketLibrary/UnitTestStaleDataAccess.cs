@@ -8,14 +8,16 @@ namespace UnitTextSupportTicketLibrary
         [Fact]
         public void TestFilePath()
         {
-            string filePath = "C:\\Users\\mgapp\\source\\repos\\SupportTicketApp\\SupportTicketLibrary\\Data\\data.csv";
-            Assert.Equal(File.Exists(filePath), true);
+            StaleDataAccess staleDataAccess = new StaleDataAccess();
+            staleDataAccess.FilePath = "C:\\Users\\mgapp\\source\\repos\\SupportTicketApp\\UnitTextSupportTicketLibrary\\TestData\\data.csv";
+            Assert.Equal(File.Exists(staleDataAccess.FilePath), true);
         }
 
         [Fact]
         public void TestLoadDataQuery()
         {
             StaleDataAccess staleDataAccess = new StaleDataAccess();
+            staleDataAccess.FilePath = "C:\\Users\\mgapp\\source\\repos\\SupportTicketApp\\UnitTextSupportTicketLibrary\\TestData\\data.csv";
             string query = "x => x.Id == 1";
             List<TicketModel> tickets = staleDataAccess.LoadData(query);
             Assert.NotNull(tickets);
@@ -26,6 +28,7 @@ namespace UnitTextSupportTicketLibrary
         public void TestLoadData()
         {
             StaleDataAccess staleDataAccess = new StaleDataAccess();
+            staleDataAccess.FilePath = "C:\\Users\\mgapp\\source\\repos\\SupportTicketApp\\UnitTextSupportTicketLibrary\\TestData\\data.csv";
             List<TicketModel> tickets = staleDataAccess.LoadData();
             Assert.NotNull(tickets);
             Assert.True(tickets.Count > 0);
@@ -35,6 +38,7 @@ namespace UnitTextSupportTicketLibrary
         public void TestAddData()
         {
             StaleDataAccess staleDataAccess = new StaleDataAccess();
+            staleDataAccess.FilePath = "C:\\Users\\mgapp\\source\\repos\\SupportTicketApp\\UnitTextSupportTicketLibrary\\TestData\\data.csv";
             staleDataAccess.SaveData(new TicketModel()
             {
                 Id = 4,
@@ -52,6 +56,7 @@ namespace UnitTextSupportTicketLibrary
         public void TestDeleteData()
         {
             StaleDataAccess staleDataAccess = new StaleDataAccess();
+            staleDataAccess.FilePath = "C:\\Users\\mgapp\\source\\repos\\SupportTicketApp\\UnitTextSupportTicketLibrary\\TestData\\data.csv";
             staleDataAccess.SaveData(new TicketModel()
             {
                 Id = 4
