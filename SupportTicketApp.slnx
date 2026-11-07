@@ -9,5 +9,6 @@
   <Project Path="SupportTicketLibrary/SupportTicketLibrary.csproj">
     <Platform Solution="Release|x64" Project="x64" />
   </Project>
+  <Project Path="UnitTestSupportTicketAPI/UnitTestSupportTicketAPI.csproj" Id="68925399-86fd-42a3-912c-35334ed4dffe" />
   <Project Path="UnitTextSupportTicketLibrary/UnitTextSupportTicketLibrary.csproj" Id="67df422b-0395-4159-bff8-7e71fbc88d6b" />
 </Solution>

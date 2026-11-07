@@ -1,6 +1,5 @@
 ﻿using SupportTicketLibrary.DataAccess;
 using SupportTicketLibrary.Models;
-
 namespace UnitTextSupportTicketLibrary
 {
     public class UnitTestStaleDataAccess

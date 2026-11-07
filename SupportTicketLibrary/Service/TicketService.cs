@@ -21,10 +21,10 @@ namespace SupportTicketLibrary.Service
             _dataAccess.SaveData(ticket, StaleDataAccess.Mode.Delete);
         }
 
-        public TicketModel GetTicketByStatus(TicketModel.Status status)
+        public List<TicketModel> GetTicketsByStatus(TicketModel.Status status)
         {
-            TicketModel ticket = _dataAccess.LoadData($"x => x.TicketStatus == {status}").First();
-            return ticket;
+            List<TicketModel> tickets = _dataAccess.LoadData($"x => x.TicketStatus == {status}");
+            return tickets;
         }
 
         public TicketModel GetTicketById(int id)
@@ -39,7 +39,7 @@ namespace SupportTicketLibrary.Service
             return tickets;
         }
 
-        public void UpdateStatus(TicketModel ticket)
+        public void UpdateTicket(TicketModel ticket)
         {
             _dataAccess.SaveData(ticket, StaleDataAccess.Mode.Update);
         }
