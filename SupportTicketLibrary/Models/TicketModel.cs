@@ -1,10 +1,12 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SupportTicketLibrary.Models
 {
-    public class TicketModel
+    [CsvRecord]
+    public partial class TicketModel
     {
         public int Id { get; set; }
         public string Title { get; set; }

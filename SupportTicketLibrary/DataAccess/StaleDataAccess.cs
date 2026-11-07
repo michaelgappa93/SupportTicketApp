@@ -8,34 +8,43 @@ namespace SupportTicketLibrary.DataAccess
 {
     public class StaleDataAccess
     {
-
-        public List<TicketModel> LoadData(string query)
+        public enum Mode
         {
-            
-            string filePath = "C:\\Users\\mgapp\\source\\repos\\SupportTicketLibrary\\Data\\data.csv";
-            using (var csvFile = CsvReader.FromFile(filePath))
-            {
-                var data = csvFile.Query().WhereDynamic(query).ToList();
-                List<TicketModel> tickets = new List<TicketModel>();
-                foreach (var item in data)
-                {
-                    TicketModel.Status ticketStatus = Enum.Parse<TicketModel.Status>(item.GetValueOrDefault("TicketStatus"));
-                    TicketModel.Priority ticketPriority = Enum.Parse<TicketModel.Priority>(item.GetValueOrDefault("TicketPriority"));
-                    tickets.Add(new TicketModel()
-                    {
-                        Title = item.GetValueOrDefault("Title"),
-                        Description = item.GetValueOrDefault("Description"),
-                        TicketStatus = ticketStatus,
-                        TicketPriority = ticketPriority
-                    });
-                }
-                return tickets;
-            };
+            Delete,
+            Add
         }
 
-        public void SaveData(string parameters)
+        public Mode SaveMode { get; set; }
+        public List<TicketModel> LoadData(string? query = null)
         {
-            throw new NotImplementedException();
+            
+            string filePath = "C:\\Users\\mgapp\\source\\repos\\SupportTicketApp\\SupportTicketLibrary\\Data\\data.csv";
+            using (var csvFile = CsvReader.FromFile(filePath))
+            {
+                var tickets = csvFile.GetRecords<TicketModel>().ToList();
+                if (query != null)
+                {
+                    return tickets.WhereDynamic(query).ToList();
+                }
+                return tickets;
+            }
+            ;
+        }
+
+        public void SaveData(TicketModel ticket, StaleDataAccess.Mode saveMode)
+        {
+            List<TicketModel> tickets = LoadData();
+            tickets.Add(ticket);
+            string filePath = "C:\\Users\\mgapp\\source\\repos\\SupportTicketApp\\SupportTicketLibrary\\Data\\data.csv";
+            var table = CsvQueryable.FromFile<TicketModel>(filePath);
+            if (saveMode == StaleDataAccess.Mode.Add)
+            {
+                table.AppendRecords(new[] { ticket });
+            }
+            else if (saveMode == StaleDataAccess.Mode.Delete)
+            {
+                table.Delete(x => x.Id == ticket.Id);
+            }
         }
     }
 }

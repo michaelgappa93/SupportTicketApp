@@ -1,4 +1,13 @@
 <Solution>
-  <Project Path="SupportTicketAPI/SupportTicketAPI.csproj" />
-  <Project Path="SupportTicketLibrary/SupportTicketLibrary.csproj" />
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="SupportTicketAPI/SupportTicketAPI.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="SupportTicketLibrary/SupportTicketLibrary.csproj">
+    <Platform Solution="Release|x64" Project="x64" />
+  </Project>
+  <Project Path="UnitTextSupportTicketLibrary/UnitTextSupportTicketLibrary.csproj" Id="67df422b-0395-4159-bff8-7e71fbc88d6b" />
 </Solution>
