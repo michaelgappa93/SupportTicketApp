@@ -1,4 +1,5 @@
-﻿using SupportTicketLibrary.Interface;
+﻿using SupportTicketLibrary.DataAccess;
+using SupportTicketLibrary.Interface;
 using SupportTicketLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -8,34 +9,38 @@ namespace SupportTicketLibrary.Service
 {
     public class TicketService
     {
-        public Task<IAsyncResult> CreateTicket(TicketModel ticket)
+        private readonly StaleDataAccess _dataAccess;
+        public void CreateTicket(TicketModel ticket)
         {
-            throw new NotImplementedException();
+            _dataAccess.SaveData(ticket, StaleDataAccess.Mode.Add);
         }
 
-        public Task<IAsyncResult> DeleteTicket(TicketModel ticket)
+        public void DeleteTicket(TicketModel ticket)
         {
-            throw new NotImplementedException();
+            _dataAccess.SaveData(ticket, StaleDataAccess.Mode.Delete);
         }
 
-        public Task<TicketModel> GetTicektByStatus(TicketModel.Status status)
+        public TicketModel GetTicketByStatus(TicketModel.Status status)
         {
-            throw new NotImplementedException();
+            TicketModel ticket = _dataAccess.LoadData($"x => x.TicketStatus == {status}").First();
+            return ticket;
         }
 
-        public Task<TicketModel> GetTicketById(int id)
+        public TicketModel GetTicketById(int id)
         {
-            throw new NotImplementedException();
+            TicketModel ticket = _dataAccess.LoadData($"x => x.Id == {id}").First();
+            return ticket;
         }
 
-        public Task<List<TicketModel>> GetTickets()
+        public List<TicketModel> GetTickets()
         {
-            throw new NotImplementedException();
+            List<TicketModel> tickets = _dataAccess.LoadData();
+            return tickets;
         }
 
-        public Task<IAsyncResult> UpdateStatus(TicketModel ticket)
+        public void UpdateStatus(TicketModel ticket)
         {
-            throw new NotImplementedException();
+            _dataAccess.SaveData(ticket, StaleDataAccess.Mode.Update);
         }
     }
 }

@@ -10,8 +10,9 @@ namespace SupportTicketLibrary.DataAccess
     {
         public enum Mode
         {
-            Delete,
-            Add
+            Add,
+            Update,
+            Delete
         }
 
         public Mode SaveMode { get; set; }
@@ -33,8 +34,6 @@ namespace SupportTicketLibrary.DataAccess
 
         public void SaveData(TicketModel ticket, StaleDataAccess.Mode saveMode)
         {
-            List<TicketModel> tickets = LoadData();
-            tickets.Add(ticket);
             string filePath = "C:\\Users\\mgapp\\source\\repos\\SupportTicketApp\\SupportTicketLibrary\\Data\\data.csv";
             var table = CsvQueryable.FromFile<TicketModel>(filePath);
             if (saveMode == StaleDataAccess.Mode.Add)
@@ -44,6 +43,13 @@ namespace SupportTicketLibrary.DataAccess
             else if (saveMode == StaleDataAccess.Mode.Delete)
             {
                 table.Delete(x => x.Id == ticket.Id);
+            }
+            else if (saveMode == StaleDataAccess.Mode.Update)
+            {
+                List<TicketModel> tickets = LoadData();
+                tickets.RemoveAll(x => x.Id == ticket.Id);
+                tickets.Add(ticket);
+                tickets.WriteCsv(filePath);
             }
         }
     }
